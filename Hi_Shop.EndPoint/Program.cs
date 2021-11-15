@@ -12,6 +12,7 @@ var provider =builder.Services.BuildServiceProvider();
 var configuration=provider.GetRequiredService<IConfiguration>();
 string connection = configuration["ConnectionString:SqlServer"];
 builder.Services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
+builder.Services.AddDbContext<IdentityDataBaseContext>(option => option.UseSqlServer(connection));
 #endregion
 
 

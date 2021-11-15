@@ -2,17 +2,15 @@
 using Hi_Shop.Domain.Attributes;
 using Hi_Shop.Domain.Users;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Hi_Shop.Persistence.Contexts
 {
     public class DataBaseContext : DbContext, IDataBaseContext
     {
-        public DataBaseContext(DbContextOptions options) : base(options)
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
 
         }
-        public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -46,7 +44,7 @@ namespace Hi_Shop.Persistence.Contexts
                 var RemoveTime = entityType.FindProperty("RemoveTime");
                 var IsRemoved = entityType.FindProperty("IsRemoved");
 
-                if (item.State==EntityState.Added && inserted != null)
+                if (item.State == EntityState.Added && inserted != null)
                 {
                     item.Property("InsertTime").CurrentValue = DateTime.Now;
                 }
