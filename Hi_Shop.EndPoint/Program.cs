@@ -1,3 +1,4 @@
+using Hi_Shop.Infrastructure.IdentityConfigs;
 using Hi_Shop.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,15 @@ var provider =builder.Services.BuildServiceProvider();
 var configuration=provider.GetRequiredService<IConfiguration>();
 string connection = configuration["ConnectionString:SqlServer"];
 builder.Services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
-builder.Services.AddDbContext<IdentityDataBaseContext>(option => option.UseSqlServer(connection));
+builder.Services.AddIdentityService(configuration);
+builder.Services.AddAuthorization();
+builder.Services.ConfigureApplicationCookie(option =>
+{
+    option.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    option.LoginPath = "/account/login";
+    option.AccessDeniedPath = "/Account/AccessDenied";
+    option.SlidingExpiration = true;
+});
 #endregion
 
 
@@ -30,7 +39,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
