@@ -13,19 +13,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CF0C87FE-1A10-4858-8928-E6200167707B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi_Shop.Domain", "Hi_Shop.Domain\Hi_Shop.Domain.csproj", "{5AB9DFF9-E6A2-4F4C-94D2-032BFC67CB2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hi_Shop.Domain", "Hi_Shop.Domain\Hi_Shop.Domain.csproj", "{5AB9DFF9-E6A2-4F4C-94D2-032BFC67CB2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi_Shop.Application", "Hi_Shop.Application\Hi_Shop.Application.csproj", "{B948A4CF-63C3-4E92-950F-927170CA45BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hi_Shop.Application", "Hi_Shop.Application\Hi_Shop.Application.csproj", "{B948A4CF-63C3-4E92-950F-927170CA45BC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{877D9787-8C96-4180-8493-D2162D663CD6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructures", "Infrastructures", "{32098CAB-02AE-40AA-89C0-252F5977A441}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi_Shop.Persistence", "Hi_Shop.Persistence\Hi_Shop.Persistence.csproj", "{E184645D-A252-4F84-AB4B-90214198483D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hi_Shop.Persistence", "Hi_Shop.Persistence\Hi_Shop.Persistence.csproj", "{E184645D-A252-4F84-AB4B-90214198483D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi_Shop.Infrastructure", "Hi_Shop.Infrastructure\Hi_Shop.Infrastructure.csproj", "{BB491FCC-F8BD-4502-906E-124FA12A527C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hi_Shop.Infrastructure", "Hi_Shop.Infrastructure\Hi_Shop.Infrastructure.csproj", "{BB491FCC-F8BD-4502-906E-124FA12A527C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi_Shop.EndPoint", "Hi_Shop.EndPoint\Hi_Shop.EndPoint.csproj", "{3C5D37D3-405E-43C5-A0F4-381A5EE825DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hi_Shop.EndPoint", "Hi_Shop.EndPoint\Hi_Shop.EndPoint.csproj", "{3C5D37D3-405E-43C5-A0F4-381A5EE825DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.EndPoint", "Admin.EndPoint\Admin.EndPoint.csproj", "{1877A6FD-DD80-4D5A-9B2F-1FAB609724FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{3C5D37D3-405E-43C5-A0F4-381A5EE825DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C5D37D3-405E-43C5-A0F4-381A5EE825DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C5D37D3-405E-43C5-A0F4-381A5EE825DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1877A6FD-DD80-4D5A-9B2F-1FAB609724FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1877A6FD-DD80-4D5A-9B2F-1FAB609724FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1877A6FD-DD80-4D5A-9B2F-1FAB609724FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1877A6FD-DD80-4D5A-9B2F-1FAB609724FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{E184645D-A252-4F84-AB4B-90214198483D} = {32098CAB-02AE-40AA-89C0-252F5977A441}
 		{BB491FCC-F8BD-4502-906E-124FA12A527C} = {32098CAB-02AE-40AA-89C0-252F5977A441}
 		{3C5D37D3-405E-43C5-A0F4-381A5EE825DD} = {877D9787-8C96-4180-8493-D2162D663CD6}
+		{1877A6FD-DD80-4D5A-9B2F-1FAB609724FB} = {877D9787-8C96-4180-8493-D2162D663CD6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5FF4F73-8BE3-4ED2-A1E9-939AC4F10EDB}
