@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Hi_Shop.EndPoint.Models.ViewModels.Register
+namespace Hi_Shop.EndPoint.Models.ViewModels.User
 {
     public class RegisterViewModel
     {
+
 
         [Required(ErrorMessage = "نام و نام خانوادگی را وارد کنید")]
         [Display(Name = "نام و نام خانوادگی")]
