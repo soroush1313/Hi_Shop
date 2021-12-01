@@ -1,5 +1,8 @@
+using Hi_Shop.Application.Interfaces.Contexts;
+using Hi_Shop.Application.Visitors.SaveVisitorInfo;
 using Hi_Shop.Infrastructure.IdentityConfigs;
 using Hi_Shop.Persistence.Contexts;
+using Hi_Shop.Persistence.Contexts.MongoContext;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +26,9 @@ builder.Services.ConfigureApplicationCookie(option =>
     option.SlidingExpiration = true;
 });
 #endregion
+
+builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
+builder.Services.AddTransient<ISaveVisitorInfoService, SaveVisitorInfoService>();
 
 
 var app = builder.Build();
