@@ -1,10 +1,12 @@
 ﻿using Hi_Shop.EndPoint.Models;
+using Hi_Shop.EndPoint.Utilities.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Hi_Shop.EndPoint.Controllers
 {
+    [ServiceFilter(typeof(SaveVisitorFilter))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

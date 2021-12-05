@@ -1,5 +1,6 @@
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.SaveVisitorInfo;
+using Hi_Shop.EndPoint.Utilities.Filters;
 using Hi_Shop.Infrastructure.IdentityConfigs;
 using Hi_Shop.Persistence.Contexts;
 using Hi_Shop.Persistence.Contexts.MongoContext;
@@ -29,6 +30,7 @@ builder.Services.ConfigureApplicationCookie(option =>
 
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 builder.Services.AddTransient<ISaveVisitorInfoService, SaveVisitorInfoService>();
+builder.Services.AddScoped<SaveVisitorFilter>();
 
 
 var app = builder.Build();

@@ -1,8 +1,10 @@
+using Hi_Shop.Application.Visitors.GetTodayReport;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
+builder.Services.AddTransient<IGetTodayReportService, GetTodayReportService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
