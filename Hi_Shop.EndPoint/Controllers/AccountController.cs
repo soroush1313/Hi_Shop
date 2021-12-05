@@ -1,10 +1,12 @@
 ﻿using Hi_Shop.Domain.Users;
 using Hi_Shop.EndPoint.Models.ViewModels.User;
+using Hi_Shop.EndPoint.Utilities.Filters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hi_Shop.EndPoint.Controllers
 {
+    [ServiceFilter(typeof(SaveVisitorFilter))]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
