@@ -1,21 +1,21 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:46846",
-      "sslPort": 44370
+      "applicationUrl": "http://localhost:5634/",
+      "sslPort": 44344
     }
   },
   "profiles": {
     "Hi_Shop.EndPoint": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7213;http://localhost:5213",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:7213;http://localhost:5213",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",
