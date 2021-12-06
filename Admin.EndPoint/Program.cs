@@ -1,10 +1,14 @@
+using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.GetTodayReport;
+using Hi_Shop.Persistence.Contexts.MongoContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IGetTodayReportService, GetTodayReportService>();
+builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
