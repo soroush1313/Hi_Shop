@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hi_Shop.Infrastructure", "H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hi_Shop.EndPoint", "Hi_Shop.EndPoint\Hi_Shop.EndPoint.csproj", "{3C5D37D3-405E-43C5-A0F4-381A5EE825DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.EndPoint", "Admin.EndPoint\Admin.EndPoint.csproj", "{1877A6FD-DD80-4D5A-9B2F-1FAB609724FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.EndPoint", "Admin.EndPoint\Admin.EndPoint.csproj", "{1877A6FD-DD80-4D5A-9B2F-1FAB609724FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -30,17 +30,7 @@ namespace Hi_Shop.EndPoint.Utilities.Filters
             var currentUrl = context.HttpContext.Request.Path;
             var request = context.HttpContext.Request;
             string visitorId = context.HttpContext.Request.Cookies["VisitorId"];
-            if (visitorId == null)
-            {
-                visitorId=Guid.NewGuid().ToString();
-                context.HttpContext.Response.Cookies.Append("VisitorId", visitorId , new Microsoft.AspNetCore.Http.CookieOptions
-                {
-                    Path="/",
-                    HttpOnly=true,
-                    Expires=DateTime.Now.AddDays(30),
-                });
 
-            }
 
             _saveVisitorInfoService.Ececute(new RequestSaveVisitorInfoDto
             {
