@@ -1,6 +1,9 @@
 ﻿using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Domain.Attributes;
+using Hi_Shop.Domain.Catalogs;
 using Hi_Shop.Domain.Users;
+using Hi_Shop.Persistence.EntityConfigurations;
+using Hi_Shop.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hi_Shop.Persistence.Contexts
@@ -11,7 +14,8 @@ namespace Hi_Shop.Persistence.Contexts
         {
 
         }
-
+        public DbSet<CatalogBrand> CatalogBrands { get; set; }
+        public DbSet<CatalogType> CatalogTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -19,12 +23,20 @@ namespace Hi_Shop.Persistence.Contexts
             {
                 if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)
                 {
-                    builder.Entity(entityType.Name).Property<DateTime>("InsertTime");
+                    builder.Entity(entityType.Name).Property<DateTime>("InsertTime").HasDefaultValue(DateTime.Now);
                     builder.Entity(entityType.Name).Property<DateTime?>("UpdateTime");
                     builder.Entity(entityType.Name).Property<DateTime?>("RemoveTime");
-                    builder.Entity(entityType.Name).Property<bool>("IsRemoved");
+                    builder.Entity(entityType.Name).Property<bool>("IsRemoved").HasDefaultValue(false);
                 }
             }
+            builder.Entity<CatalogType>().HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
+
+
+            builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
+
+            DataBaseContextSeed.CatalogSeed(builder);
+
             base.OnModelCreating(builder);
         }
 
@@ -58,6 +70,7 @@ namespace Hi_Shop.Persistence.Contexts
                 {
                     item.Property("RemoveTime").CurrentValue = DateTime.Now;
                     item.Property("IsRemoved").CurrentValue = true;
+                    item.State = EntityState.Modified;
                 }
             }
 

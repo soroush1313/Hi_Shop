@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Hi_Shop.Application\Hi_Shop.Application.csproj" />
+    <ProjectReference Include="..\Hi_Shop.Infrastructure\Hi_Shop.Infrastructure.csproj" />
     <ProjectReference Include="..\Hi_Shop.Persistence\Hi_Shop.Persistence.csproj" />
   </ItemGroup>
 
