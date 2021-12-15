@@ -1,13 +1,37 @@
+using Admin.EndPoint.MappingProfiles;
+using Application.Catalogs.CatalogTypes;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.GetTodayReport;
+using Hi_Shop.Infrastructure.MappingProfile;
+using Hi_Shop.Persistence.Contexts;
 using Hi_Shop.Persistence.Contexts.MongoContext;
+using Hi_Shop.Persistence.Seeds;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<IGetTodayReportService, GetTodayReportService>();
+builder.Services.AddScoped<IGetTodayReportService, GetTodayReportService>();
+builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
+builder.Services.AddTransient<ICatalogTypeService, CatalogTypeService>();
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
+builder.Services.AddScoped<DataBaseContextSeed>();
+
+
+
+#region ConnectionString
+var provider = builder.Services.BuildServiceProvider();
+var configuration = provider.GetRequiredService<IConfiguration>();
+string connection = configuration["ConnectionString:SqlServer"];
+builder.Services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
+#endregion
+
+
+#region Mapper
+builder.Services.AddAutoMapper(typeof(CatalogMappingProfile));
+builder.Services.AddAutoMapper(typeof(CatalogVMMappingProfile));
+#endregion
 
 var app = builder.Build();
 
