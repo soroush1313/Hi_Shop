@@ -1,3 +1,4 @@
+using Hi_Shop.Application.Catalogs.CatalogTypes.GetMenuItem;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.SaveVisitorInfo;
 using Hi_Shop.Application.Visitors.VisitorOnline;
@@ -5,6 +6,7 @@ using Hi_Shop.EndPoint.Hubs;
 using Hi_Shop.EndPoint.Utilities.Filters;
 using Hi_Shop.EndPoint.Utilities.Filters.Middlewares;
 using Hi_Shop.Infrastructure.IdentityConfigs;
+using Hi_Shop.Infrastructure.MappingProfile;
 using Hi_Shop.Persistence.Contexts;
 using Hi_Shop.Persistence.Contexts.MongoContext;
 using Microsoft.EntityFrameworkCore;
@@ -34,9 +36,13 @@ builder.Services.ConfigureApplicationCookie(option =>
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 builder.Services.AddTransient<ISaveVisitorInfoService, SaveVisitorInfoService>();
 builder.Services.AddTransient<IVisitorOnlineService, VisitorOnlineService>();
+builder.Services.AddTransient<IGetMenuItemService, GetMenuItemService>();
+builder.Services.AddTransient<IDataBaseContext, DataBaseContext>();
 builder.Services.AddScoped<SaveVisitorFilter>();
 builder.Services.AddSignalR();
 
+//mapper
+builder.Services.AddAutoMapper(typeof(CatalogMappingProfile));
 
 var app = builder.Build();
 

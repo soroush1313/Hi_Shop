@@ -1,5 +1,6 @@
 ﻿using Application.Catalogs.CatalogTypes;
 using AutoMapper;
+using Hi_Shop.Application.Catalogs.CatalogTypes.GetMenuItem;
 using Hi_Shop.Domain.Catalogs;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,13 @@ namespace Hi_Shop.Infrastructure.MappingProfile
                 .ForMember(dest => dest.SubTypeCount, option =>
                   option.MapFrom(src => src.SubType.Count));
 
+            CreateMap<CatalogType, MenuItemDto>()
+                .ForMember(dest => dest.Name, opt =>
+                   opt.MapFrom(src => src.Type))
+                .ForMember(dest => dest.ParentId, opt =>
+                  opt.MapFrom(src => src.ParentCatalogTypeId))
+                .ForMember(dest => dest.SubMenu, opt =>
+                 opt.MapFrom(src => src.SubType));
         }
     }
 }
