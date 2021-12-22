@@ -1,5 +1,6 @@
 using Admin.EndPoint.MappingProfiles;
 using Application.Catalogs.CatalogTypes;
+using Hi_Shop.Application.Catalogs.CatalogItems.AddNewCatalogItem;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.GetTodayReport;
 using Hi_Shop.Infrastructure.MappingProfile;
@@ -15,6 +16,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IGetTodayReportService, GetTodayReportService>();
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 builder.Services.AddTransient<ICatalogTypeService, CatalogTypeService>();
+builder.Services.AddTransient<IAddNewCatalogItemService, AddNewCatalogItemService>();
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 builder.Services.AddScoped<DataBaseContextSeed>();
 
