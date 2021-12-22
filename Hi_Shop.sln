@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.EndPoint", "Admin.End
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commons", "Commons", "{D076B971-6FEB-4EDE-9D7D-AAC547AF58DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hi_Shop.Common", "Hi_Shop.Common\Hi_Shop.Common.csproj", "{910595D7-4C16-4F0D-9F21-48CD281FA896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hi_Shop.Common", "Hi_Shop.Common\Hi_Shop.Common.csproj", "{910595D7-4C16-4F0D-9F21-48CD281FA896}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
