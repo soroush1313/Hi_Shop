@@ -203,90 +203,90 @@
             $(this).closest('tr').remove();
         });
 
-        //function sendDataToServer(e) {
-        //    e.preventDefault();
-        //    var form = $("#createForm");
-        //    form.validate();
-        //    if (form.valid() == false) {
-        //        swal.fire(
-        //            'هشدار!',
-        //            "اطلاعات فرم به درستی وارد نشده است!",
-        //            'warning'
-        //        );
-        //        return false;
-        //    }
+        function sendDataToServer(e) {
+            e.preventDefault();
+            var form = $("#createForm");
+            form.validate();
+            if (form.valid() == false) {
+                swal.fire(
+                    'هشدار!',
+                    "اطلاعات فرم به درستی وارد نشده است!",
+                    'warning'
+                );
+                return false;
+            }
 
-        //    var data = new FormData();
-        //    //دریافت مقادیر از تکس باکس ها و....
-        //    data.append("Name", $("#Name").val());
-        //    data.append("AvailableStock", $("#AvailableStock").val());
-        //    data.append("RestockThreshold", $("#RestockThreshold").val());
-        //    data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
-        //    data.append("Price", $("#Price").val());
-        //    data.append("Description", $("#Description").val());
+            var data = new FormData();
+            //دریافت مقادیر از تکس باکس ها و....
+            data.append("Name", $("#Name").val());
+            data.append("AvailableStock", $("#AvailableStock").val());
+            data.append("RestockThreshold", $("#RestockThreshold").val());
+            data.append("MaxStockThreshold", $("#MaxStockThreshold").val());
+            data.append("Price", $("#Price").val());
+            data.append("Description", $("#Description").val());
 
-        //    data.append("CatalogTypeId", $('#Category').find('option:selected').val());
-        //    data.append("CatalogBrandId", $('#Brand').find('option:selected').val());
+            data.append("CatalogTypeId", $('#Category').find('option:selected').val());
+            data.append("CatalogBrandId", $('#Brand').find('option:selected').val());
 
-        //    //دریافت عکس های انتخاب شده توسط کاربر و قرار دادن عکس ها در متغیر data
-        //    var catalogImages = document.getElementById("Images");
-        //    if (catalogImages.files.length > 0) {
-        //        for (var i = 0; i < catalogImages.files.length; i++) {
-        //            data.append('Images-' + i, catalogImages.files[i]);
-        //        }
-        //    }
+            //دریافت عکس های انتخاب شده توسط کاربر و قرار دادن عکس ها در متغیر data
+            var catalogImages = document.getElementById("Images");
+            if (catalogImages.files.length > 0) {
+                for (var i = 0; i < catalogImages.files.length; i++) {
+                    data.append('Images-' + i, catalogImages.files[i]);
+                }
+            }
 
-        //    //دریافت ویژگی های محصول از جدول
-        //    var dataFeaturesViewModel = $('#tbl_Features tr:gt(0)').map(function () {
-        //        return {
-        //            Group: $(this.cells[0]).text(),
-        //            DisplayName: $(this.cells[1]).text(),
-        //            Value: $(this.cells[2]).text(),
-        //        };
-        //    }).get();
+            //دریافت ویژگی های محصول از جدول
+            var dataFeaturesViewModel = $('#tbl_Features tr:gt(0)').map(function () {
+                return {
+                    Group: $(this.cells[0]).text(),
+                    DisplayName: $(this.cells[1]).text(),
+                    Value: $(this.cells[2]).text(),
+                };
+            }).get();
 
-        //    $.each(dataFeaturesViewModel, function (i, val) {
-        //        data.append('Features[' + i + '].Group', val.Group);
-        //        data.append('Features[' + i + '].DisplayName', val.DisplayName);
-        //        data.append('Features[' + i + '].Value', val.Value);
-        //    });
+            $.each(dataFeaturesViewModel, function (i, val) {
+                data.append('Features[' + i + '].Group', val.Group);
+                data.append('Features[' + i + '].DisplayName', val.DisplayName);
+                data.append('Features[' + i + '].Value', val.Value);
+            });
 
-        //    var ajaxRequest = $.ajax({
-        //        type: "POST",
-        //        url: "/catalogitems/create",
-        //        contentType: false,
-        //        processData: false,
-        //        data: data,
-        //        headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
-        //        success: function (data) {
-        //            if (data.isSuccess == true) {
-        //                swal.fire(
-        //                    'موفق!',
-        //                    'کاتالوگ با موفقیت ثبت شد',
-        //                    'success'
-        //                ).then(function (isConfirm) {
-        //                    window.location.href = "/catalogitems";
-        //                });
-        //            }
-        //            else {
-        //                swal.fire(
-        //                    'هشدار!',
-        //                     "دیتا ثبت نشد",
-        //                    'warning'
-        //                );
-        //            }
-        //        },
-        //        error: function (xhr, ajaxOptions, thrownError) {
-        //            alert(xhr.status);
-        //            alert(thrownError);
-        //        }
-        //    });
+            var ajaxRequest = $.ajax({
+                type: "POST",
+                url: "/catalogitems/create",
+                contentType: false,
+                processData: false,
+                data: data,
+                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                success: function (data) {
+                    if (data.isSuccess == true) {
+                        swal.fire(
+                            'موفق!',
+                            'کاتالوگ با موفقیت ثبت شد',
+                            'success'
+                        ).then(function (isConfirm) {
+                            window.location.href = "/catalogitems";
+                        });
+                    }
+                    else {
+                        swal.fire(
+                            'هشدار!',
+                             "دیتا ثبت نشد",
+                            'warning'
+                        );
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
 
-        //    ajaxRequest.done(function (xhr, textStatus) {
-        //        // Do other operation
-        //    });
+            ajaxRequest.done(function (xhr, textStatus) {
+                // Do other operation
+            });
  
-        //}
+        }
 
             
 
