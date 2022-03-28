@@ -27,5 +27,15 @@
     <ProjectReference Include="..\Hi_Shop.Infrastructure\Hi_Shop.Infrastructure.csproj" />
     <ProjectReference Include="..\Hi_Shop.Persistence\Hi_Shop.Persistence.csproj" />
   </ItemGroup>
+<ItemGroup>
+  <!-- Group AppSettings in Console project. Use None to prevent "Duplicate 'Content' items were included" when using (default) EnableDefaultContentItems=true -->
+  <None Include="appsettings.*.json">
+    <DependentUpon>appsettings.json</DependentUpon>
+  </None>
+</ItemGroup>
+<ItemGroup>
+  <None Remove="appsettings.Development.json" />
+  <None Remove="appsettings.Production.json" />
+</ItemGroup>
 
 </Project>

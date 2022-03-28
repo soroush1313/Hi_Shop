@@ -20,7 +20,7 @@ builder.Services.AddControllersWithViews();
 #region Connection String
 var provider =builder.Services.BuildServiceProvider();
 var configuration=provider.GetRequiredService<IConfiguration>();
-string connection = configuration["ConnectionString:SqlServer"];
+string connection = configuration.GetConnectionString("SqlServer");
 builder.Services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
 builder.Services.AddIdentityService(configuration);
 builder.Services.AddAuthorization();

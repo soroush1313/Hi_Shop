@@ -16,7 +16,7 @@ namespace Hi_Shop.Infrastructure.IdentityConfigs
     {
         public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
         {
-            string connection = configuration["ConnectionString:SqlServer"];
+            string connection = configuration.GetConnectionString("SqlServer");
             services.AddDbContext<IdentityDataBaseContext>(option => option.UseSqlServer(connection));
 
             services.AddIdentity<User, IdentityRole>()

@@ -1,6 +1,8 @@
 using Admin.EndPoint.MappingProfiles;
 using Application.Catalogs.CatalogTypes;
+using FluentValidation;
 using Hi_Shop.Application.Catalogs.CatalogItems.AddNewCatalogItem;
+using Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.GetTodayReport;
 using Hi_Shop.Infrastructure.MappingProfile;
@@ -17,6 +19,7 @@ builder.Services.AddScoped<IGetTodayReportService, GetTodayReportService>();
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 builder.Services.AddTransient<ICatalogTypeService, CatalogTypeService>();
 builder.Services.AddTransient<IAddNewCatalogItemService, AddNewCatalogItemService>();
+builder.Services.AddTransient<ICatalogItemService, CatalogItemService>();
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 builder.Services.AddScoped<DataBaseContextSeed>();
 
@@ -25,7 +28,7 @@ builder.Services.AddScoped<DataBaseContextSeed>();
 #region ConnectionString
 var provider = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();
-string connection = configuration["ConnectionString:SqlServer"];
+string connection = configuration.GetConnectionString("SqlServer");
 builder.Services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
 #endregion
 
@@ -34,6 +37,14 @@ builder.Services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(con
 builder.Services.AddAutoMapper(typeof(CatalogMappingProfile));
 builder.Services.AddAutoMapper(typeof(CatalogVMMappingProfile));
 #endregion
+
+
+#region Fluent Validation
+
+builder.Services.AddTransient<IValidator<AddNewCatalogItemDto>, AddNewCatalogItemDtoValidator>();
+
+#endregion
+
 
 var app = builder.Build();
 

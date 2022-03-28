@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hi_Shop.Persistence.Migrations.IdentityDataBase
 {
     [DbContext(typeof(IdentityDataBaseContext))]
-    [Migration("20211122112000_initIdentityContext")]
-    partial class initIdentityContext
+    [Migration("20220328142045_identity")]
+    partial class identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

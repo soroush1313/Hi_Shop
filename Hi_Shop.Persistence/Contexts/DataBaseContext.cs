@@ -12,6 +12,7 @@ namespace Hi_Shop.Persistence.Contexts
     {
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
+            //Database.EnsureCreated();
 
         }
         public DbSet<CatalogBrand> CatalogBrands { get; set; }
@@ -20,6 +21,7 @@ namespace Hi_Shop.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             foreach (var entityType in builder.Model.GetEntityTypes())
             {
                 if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)

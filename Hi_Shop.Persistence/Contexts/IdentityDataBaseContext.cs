@@ -9,6 +9,7 @@ namespace Hi_Shop.Persistence.Contexts
     {
         public IdentityDataBaseContext(DbContextOptions<IdentityDataBaseContext> options) : base(options)
         {
+            Database.EnsureCreated();
 
         }
 

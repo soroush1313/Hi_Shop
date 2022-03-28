@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Hi_Shop.Application.Interfaces.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
 {
     public interface ICatalogItemService
     {
         List<CatalogBrandDto> GetBrand();
-        List<CatalogTypeDto> GetCatalogType();
+        List<ListCatalogTypeDto> GetCatalogType();
     }
 
     public class CatalogItemService : ICatalogItemService
@@ -14,19 +15,37 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
 
-        public AddNewCatalogItemService(IDataBaseContext context, IMapper mapper)
+        public CatalogItemService(IDataBaseContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
         }
         public List<CatalogBrandDto> GetBrand()
         {
-            throw new NotImplementedException();
+            var brands = context.CatalogBrands
+                .OrderBy(p => p.Brand).Take(500).ToList();
+            var data = mapper.Map<List<CatalogBrandDto>>(brands);
+            return data;
         }
 
-        public List<CatalogTypeDto> GetCatalogType()
+        public List<ListCatalogTypeDto> GetCatalogType()
         {
-            throw new NotImplementedException();
+            var types1 = context.CatalogTypes.ToList();
+            var types = context.CatalogTypes
+                .Include(p => p.ParentCatalogType)
+                .Include(p => p.ParentCatalogType)
+                .ThenInclude(p => p.ParentCatalogType.ParentCatalogType)
+                .Include(p => p.SubType)
+                .Where(p => p.ParentCatalogTypeId != null)
+                .Where(p => p.SubType.Count == 0)
+                .Select(p => new { p.Id, p.Type, p.ParentCatalogType, p.SubType })
+                .ToList()
+                .Select(p => new ListCatalogTypeDto
+                {
+                    Id = p.Id,
+                    Type = $"{p?.Type ?? ""} - {p?.ParentCatalogType?.Type ?? ""} - {p?.ParentCatalogType?.ParentCatalogType?.Type ?? ""}"
+                }).ToList();
+            return types;
         }
     }
 
@@ -36,7 +55,7 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
         public string Brand { get; set; }
     }
 
-    public class CatalogTypeDto
+    public class ListCatalogTypeDto
     {
         public int Id { get; set; }
         public string Type { get; set; }

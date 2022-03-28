@@ -12,8 +12,11 @@ namespace Hi_Shop.Domain.Catalogs
         public CatalogType CatalogType { get; set; }
         public int CatalogBrandId { get; set; }
         public CatalogBrand CatalogBrand { get; set; }
+        //tedad mojude
         public int AvailableStock { get; set; }
+        //mojudie mahsul be kmtr az in meqdar resid sharzh konim
         public int RestockThreshold { get; set; }
+        //saghfe sefaresh
         public int MaxStockThreshold { get; set; }
 
         public ICollection<CatalogItemFeature> CatalogItemFeatures { get; set; }

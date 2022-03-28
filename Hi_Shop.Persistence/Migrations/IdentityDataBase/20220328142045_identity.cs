@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hi_Shop.Persistence.Migrations.IdentityDataBase
 {
-    public partial class initIdentityContext : Migration
+    public partial class identity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

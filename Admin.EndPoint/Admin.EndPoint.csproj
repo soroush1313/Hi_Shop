@@ -15,5 +15,4 @@
     <ProjectReference Include="..\Hi_Shop.Infrastructure\Hi_Shop.Infrastructure.csproj" />
     <ProjectReference Include="..\Hi_Shop.Persistence\Hi_Shop.Persistence.csproj" />
   </ItemGroup>
-
 </Project>
