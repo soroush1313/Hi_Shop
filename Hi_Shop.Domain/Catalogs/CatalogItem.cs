@@ -9,6 +9,7 @@ namespace Hi_Shop.Domain.Catalogs
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
+        public int CatalogTypeId { get; set; }
         public CatalogType CatalogType { get; set; }
         public int CatalogBrandId { get; set; }
         public CatalogBrand CatalogBrand { get; set; }

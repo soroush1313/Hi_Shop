@@ -22,7 +22,7 @@ public class AddNewCatalogItemDtoValidator : AbstractValidator<AddNewCatalogItem
     {
         RuleFor(p => p.Name).NotNull().WithMessage("نام کاتالوگ اجباری است");
         RuleFor(p => p.Name).Length(2, 100);
-        RuleFor(p => p.Description).NotNull().WithMessage("توضیحات نمیتواند خالی باشد");
+        //RuleFor(p => p.Description).NotNull().WithMessage("توضیحات نمیتواند خالی باشد");
         RuleFor(p => p.AvailableStock).InclusiveBetween(0, int.MaxValue);
         RuleFor(p => p.Price).InclusiveBetween(0, int.MaxValue);
         RuleFor(p => p.Price).NotNull().WithMessage("قیمت نمیتواند خالی باشد");

@@ -8,5 +8,7 @@ namespace Hi_Shop.Domain.Catalogs
         public int Id { get; set; }
         public string Src { get; set; }
         public CatalogItem CatalogItem { get; set; }
+        public int CatlogItemId { get; set; }
+
     }
 }

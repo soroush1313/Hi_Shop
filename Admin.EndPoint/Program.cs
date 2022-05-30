@@ -5,6 +5,7 @@ using Hi_Shop.Application.Catalogs.CatalogItems.AddNewCatalogItem;
 using Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.GetTodayReport;
+using Hi_Shop.Infrastructure.ExternalApi.ImageServer;
 using Hi_Shop.Infrastructure.MappingProfile;
 using Hi_Shop.Persistence.Contexts;
 using Hi_Shop.Persistence.Contexts.MongoContext;
@@ -20,6 +21,7 @@ builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 builder.Services.AddTransient<ICatalogTypeService, CatalogTypeService>();
 builder.Services.AddTransient<IAddNewCatalogItemService, AddNewCatalogItemService>();
 builder.Services.AddTransient<ICatalogItemService, CatalogItemService>();
+builder.Services.AddTransient<IImageUploadService, ImageUploadService>();
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 builder.Services.AddScoped<DataBaseContextSeed>();
 

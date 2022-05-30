@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hi_Shop.Persistence.Migrations
 {
-    public partial class test1 : Migration
+    public partial class newchange : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace Hi_Shop.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Brand = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 3, 28, 0, 33, 34, 433, DateTimeKind.Local).AddTicks(9340)),
+                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 5, 28, 11, 16, 1, 313, DateTimeKind.Local).AddTicks(8117)),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -34,7 +34,7 @@ namespace Hi_Shop.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ParentCatalogTypeId = table.Column<int>(type: "int", nullable: true),
-                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 3, 28, 0, 33, 34, 435, DateTimeKind.Local).AddTicks(399)),
+                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 5, 28, 11, 16, 1, 315, DateTimeKind.Local).AddTicks(9187)),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -63,7 +63,7 @@ namespace Hi_Shop.Persistence.Migrations
                     AvailableStock = table.Column<int>(type: "int", nullable: false),
                     RestockThreshold = table.Column<int>(type: "int", nullable: false),
                     MaxStockThreshold = table.Column<int>(type: "int", nullable: false),
-                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 3, 28, 0, 33, 34, 434, DateTimeKind.Local).AddTicks(2084)),
+                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 5, 28, 11, 16, 1, 314, DateTimeKind.Local).AddTicks(3322)),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -95,7 +95,7 @@ namespace Hi_Shop.Persistence.Migrations
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Group = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CatalogItemId = table.Column<int>(type: "int", nullable: false),
-                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 3, 28, 0, 33, 34, 434, DateTimeKind.Local).AddTicks(5735)),
+                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 5, 28, 11, 16, 1, 314, DateTimeKind.Local).AddTicks(9630)),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -119,7 +119,8 @@ namespace Hi_Shop.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Src = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CatalogItemId = table.Column<int>(type: "int", nullable: false),
-                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 3, 28, 0, 33, 34, 434, DateTimeKind.Local).AddTicks(7981)),
+                    CatlogItemId = table.Column<int>(type: "int", nullable: false),
+                    InsertTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 5, 28, 11, 16, 1, 315, DateTimeKind.Local).AddTicks(4288)),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true)

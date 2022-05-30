@@ -5,6 +5,7 @@ using Hi_Shop.Common;
 using Hi_Shop.Domain.Catalogs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 

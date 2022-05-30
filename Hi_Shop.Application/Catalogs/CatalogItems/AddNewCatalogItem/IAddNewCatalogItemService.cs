@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentValidation;
 
 namespace Hi_Shop.Application.Catalogs.CatalogItems.AddNewCatalogItem
 {
@@ -19,14 +20,21 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.AddNewCatalogItem
     {
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
+        private readonly IValidator<AddNewCatalogItemDto> _validator;
 
-        public AddNewCatalogItemService(IDataBaseContext context, IMapper mapper)
+        public AddNewCatalogItemService(IDataBaseContext context, IMapper mapper, IValidator<AddNewCatalogItemDto> validator)
         {
             this.context = context;
             this.mapper = mapper;
+            _validator = validator;
         }
         public BaseDto<int> Execute(AddNewCatalogItemDto request)
         {
+            var validate = _validator.Validate(request);
+            if (!validate.IsValid)
+            {
+                throw new Exception(validate.Errors.Select(s => s.ErrorMessage).ToString());
+            }
             var catalogItem = mapper.Map<CatalogItem>(request);
             context.CatalogItems.Add(catalogItem);
             context.SaveChanges();
