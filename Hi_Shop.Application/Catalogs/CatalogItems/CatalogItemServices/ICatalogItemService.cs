@@ -96,7 +96,7 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
                     Price = p.Price
                 }).ToList();
 
-            return new PaginatedItemsDto<CatalogItemListItemDto>(page, page, rowCount, data);
+            return new PaginatedItemsDto<CatalogItemListItemDto>(page, pageSize, rowCount, data);
         }
 
         public List<ListCatalogTypeDto> GetCatalogType()
