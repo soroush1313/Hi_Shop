@@ -1,5 +1,6 @@
 ﻿using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Domain.Attributes;
+using Hi_Shop.Domain.Baskets;
 using Hi_Shop.Domain.Catalogs;
 using Hi_Shop.Domain.Users;
 using Hi_Shop.Persistence.EntityConfigurations;
@@ -18,6 +19,8 @@ namespace Hi_Shop.Persistence.Contexts
         public DbSet<CatalogBrand> CatalogBrands { get; set; }
         public DbSet<CatalogType> CatalogTypes { get; set; }
         public DbSet<CatalogItem> CatalogItems { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
+        public DbSet<BasketItem> BasketItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
