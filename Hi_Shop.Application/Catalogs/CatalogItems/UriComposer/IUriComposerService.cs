@@ -15,7 +15,7 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.UriComposer
     {
         public string ComposeImageUri(string src)
         {
-            return "https://localhost:7194/" + src;
+            return "https://localhost:7194/" + src.Replace("\\" , "//");
         }
     }
 }
