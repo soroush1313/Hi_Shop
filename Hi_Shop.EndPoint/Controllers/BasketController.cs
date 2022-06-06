@@ -31,6 +31,21 @@ namespace Hi_Shop.EndPoint.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [HttpPost]
+        public IActionResult RemoveItemFromBasket(int itemId)
+        {
+            basketService.RemoveItemFromBasket(itemId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult SetQuantity(int basketItemId, int quantity)
+        {
+            return Json(basketService.SetQuantities(basketItemId, quantity));
+        }
+
+
         private BasketDto GetOrSetBasket()
         {
             if (signInManager.IsSignedIn(User))

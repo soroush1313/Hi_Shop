@@ -48,12 +48,17 @@ namespace Hi_Shop.Domain.Baskets
         {
             CatalogItemId = catalogItemId;
             UnitPrice = unitPrice;
-            Quantity = quantity;
+            SetQuantity(quantity);
         }
 
         public void AddQuantity(int quantity)
         {
             Quantity += quantity;
+        }
+
+        public void SetQuantity(int quantity)
+        {
+            Quantity = quantity;
         }
     }
 }

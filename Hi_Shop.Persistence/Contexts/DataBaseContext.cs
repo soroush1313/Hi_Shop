@@ -36,6 +36,8 @@ namespace Hi_Shop.Persistence.Contexts
                 }
             }
             builder.Entity<CatalogType>().HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
+            builder.Entity<BasketItem>().HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
+            builder.Entity<Basket>().HasQueryFilter(m => EF.Property<bool>(m, "IsRemoved") == false);
 
 
             builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
