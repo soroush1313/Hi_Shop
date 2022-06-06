@@ -13,6 +13,7 @@ namespace Hi_Shop.Application.BasketsService
     public interface IBasketService
     {
         BasketDto GetOrCreateBasketForUser(string buyerId);
+        void AddItemToBasket(int basketId, int catalogItemId, int quantity = 1);
     }
 
     public class BasketService : IBasketService
@@ -25,6 +26,17 @@ namespace Hi_Shop.Application.BasketsService
             this.context = context;
             this.uriComposerService = uriComposerService;
         }
+
+        public void AddItemToBasket(int basketId, int catalogItemId, int quantity = 1)
+        {
+            var basket = context.Baskets.FirstOrDefault(p => p.Id == basketId);
+            if (basket == null)
+                throw new Exception("");
+            var catalog = context.CatalogItems.Find(catalogItemId);
+            basket.AddItem(catalogItemId,quantity,catalog.Price);
+            context.SaveChanges();
+        }
+
         public BasketDto GetOrCreateBasketForUser(string buyerId)
         {
             var basket = context.Baskets.Include(p=>p.Items)

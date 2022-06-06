@@ -44,11 +44,11 @@ namespace Hi_Shop.Domain.Baskets
         public int BasketId { get; private set; }
         //public Basket Basket { get; private set; }
 
-        public BasketItem(int unitPrice , int catalogItemId , int quantity)
+        public BasketItem(int catalogItemId, int quantity, int unitPrice)
         {
-            this.UnitPrice = unitPrice;
-            this.CatalogItemId = catalogItemId;
-            this.CatalogItemId = catalogItemId;
+            CatalogItemId = catalogItemId;
+            UnitPrice = unitPrice;
+            Quantity = quantity;
         }
 
         public void AddQuantity(int quantity)

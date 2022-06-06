@@ -1,3 +1,4 @@
+using Hi_Shop.Application.BasketsService;
 using Hi_Shop.Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 using Hi_Shop.Application.Catalogs.CatalogItems.GetCatalogItemPLP;
 using Hi_Shop.Application.Catalogs.CatalogItems.UriComposer;
@@ -44,6 +45,7 @@ builder.Services.AddTransient<IDataBaseContext, DataBaseContext>();
 builder.Services.AddTransient<IGetCatalogItemPLPService, GetCatalogItemPLPService>();
 builder.Services.AddTransient<IGetCatalogItemPDPService, GetCatalogItemPDPService>();
 builder.Services.AddTransient<IUriComposerService, UriComposerService>();
+builder.Services.AddTransient<IBasketService, BasketService>();
 builder.Services.AddScoped<SaveVisitorFilter>();
 builder.Services.AddSignalR();
 
