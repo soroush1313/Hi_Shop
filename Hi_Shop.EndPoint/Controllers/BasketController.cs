@@ -1,5 +1,6 @@
 ﻿using Hi_Shop.Application.BasketsService;
 using Hi_Shop.Domain.Users;
+using Hi_Shop.EndPoint.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace Hi_Shop.EndPoint.Controllers
     {
         private readonly IBasketService basketService;
         private readonly SignInManager<User> signInManager;
-        private string UserId = null;
+        private string userId = null;
 
         public BasketController(IBasketService basketService, SignInManager<User> signInManager)
         {
@@ -50,12 +51,13 @@ namespace Hi_Shop.EndPoint.Controllers
         {
             if (signInManager.IsSignedIn(User))
             {
-                return basketService.GetOrCreateBasketForUser(User.Identity.Name);
+                userId = ClaimUtility.GetUserId(User);
+                return basketService.GetOrCreateBasketForUser(userId);
             }
             else
             {
                 SetCookiesForBasket();
-                return basketService.GetOrCreateBasketForUser(UserId);
+                return basketService.GetOrCreateBasketForUser(userId);
             }
         }
 
@@ -64,14 +66,14 @@ namespace Hi_Shop.EndPoint.Controllers
             string basketCookieName = "BasketId";
             if (Request.Cookies.ContainsKey(basketCookieName))
             {
-                UserId = Request.Cookies[basketCookieName];
+                userId = Request.Cookies[basketCookieName];
             }
 
-            if (UserId != null) return;
-            UserId = Guid.NewGuid().ToString();
+            if (userId != null) return;
+            userId = Guid.NewGuid().ToString();
             var cookieOptions = new CookieOptions { IsEssential = true };
             cookieOptions.Expires = DateTime.Today.AddYears(2);
-            Response.Cookies.Append(basketCookieName, UserId, cookieOptions);
+            Response.Cookies.Append(basketCookieName, userId, cookieOptions);
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using Hi_Shop.Domain.Users;
+﻿using Hi_Shop.Application.BasketsService;
+using Hi_Shop.Domain.Users;
 using Hi_Shop.EndPoint.Models.ViewModels.User;
 using Hi_Shop.EndPoint.Utilities.Filters;
 using Microsoft.AspNetCore.Identity;
@@ -11,10 +12,13 @@ namespace Hi_Shop.EndPoint.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IBasketService basketService;
+
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager , IBasketService basketService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.basketService = basketService;
         }
 
         public IActionResult Register()
@@ -38,6 +42,9 @@ namespace Hi_Shop.EndPoint.Controllers
             var result = _userManager.CreateAsync(newUser, model.Password).Result;
             if (result.Succeeded)
             {
+                var user = _userManager.FindByNameAsync(newUser.Email).Result;
+                TransferBasketForUser(user.Id);
+                _signInManager.SignInAsync(user, true).Wait();
                 return RedirectToAction(nameof(Profile));
             }
             foreach (var item in result.Errors)
@@ -78,6 +85,7 @@ namespace Hi_Shop.EndPoint.Controllers
             var result = _signInManager.PasswordSignInAsync(user, model.Password, model.IsPersistent, true).Result;
             if (result.Succeeded)
             {
+                TransferBasketForUser(user.Id);
                 return Redirect(model.ReturnUrl);
             }
             if (result.RequiresTwoFactor)
@@ -91,6 +99,17 @@ namespace Hi_Shop.EndPoint.Controllers
         {
             _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        private void TransferBasketForUser(string userId)
+        {
+            string cookieName = "BasketId";
+            if (Request.Cookies.ContainsKey(cookieName))
+            {
+                var anonymousId = Request.Cookies[cookieName];
+                basketService.TransferBasket(anonymousId,userId);
+                Response.Cookies.Delete(cookieName);
+            }
         }
     }
 }
