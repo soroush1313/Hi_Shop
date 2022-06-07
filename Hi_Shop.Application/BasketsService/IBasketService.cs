@@ -16,6 +16,7 @@ namespace Hi_Shop.Application.BasketsService
         void AddItemToBasket(int basketId, int catalogItemId, int quantity = 1);
         bool RemoveItemFromBasket(int itemId);
         bool SetQuantities(int itemId , int quantity);
+        BasketDto GetBasketForUser(string userId);
     }
 
     public class BasketService : IBasketService
@@ -37,6 +38,35 @@ namespace Hi_Shop.Application.BasketsService
             var catalog = context.CatalogItems.Find(catalogItemId);
             basket.AddItem(catalogItemId,quantity,catalog.Price);
             context.SaveChanges();
+        }
+
+        public BasketDto GetBasketForUser(string userId)
+        {
+            var basket = context.Baskets.Include(p => p.Items)
+                .ThenInclude(p => p.CatalogItem)
+                .ThenInclude(p => p.CatalogItemImages)
+                .SingleOrDefault(p => p.BuyerId == userId);
+            if (basket == null)
+            {
+                return null;
+            }
+
+            return new BasketDto
+            {
+                Id = basket.Id,
+                BuyerId = basket.BuyerId,
+                Items = basket.Items.Select(item => new BasketItemDto
+                {
+                    CatalogItemId = item.CatalogItemId,
+                    Id = item.Id,
+                    CatalogName = item.CatalogItem.Name,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice,
+                    ImageUrl = uriComposerService.ComposeImageUri(item?.CatalogItem?.CatalogItemImages?.FirstOrDefault()
+                        ?.Src ?? ""),
+
+                }).ToList()
+            };
         }
 
         public BasketDto GetOrCreateBasketForUser(string buyerId)
@@ -103,6 +133,16 @@ namespace Hi_Shop.Application.BasketsService
         public int Id { get; set; }
         public string BuyerId { get; set; }
         public List<BasketItemDto> Items { get; set; } = new List<BasketItemDto>();
+
+        public int Total()
+        {
+            if (Items.Count > 0)
+            {
+                return Items.Sum(p => p.UnitPrice * p.Quantity);
+            }
+
+            return 0;
+        }
     }
 
     public class BasketItemDto
