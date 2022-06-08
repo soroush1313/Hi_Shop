@@ -4,6 +4,7 @@ using Hi_Shop.Application.Catalogs.CatalogItems.GetCatalogItemPLP;
 using Hi_Shop.Application.Catalogs.CatalogItems.UriComposer;
 using Hi_Shop.Application.Catalogs.CatalogTypes.GetMenuItem;
 using Hi_Shop.Application.Interfaces.Contexts;
+using Hi_Shop.Application.Users;
 using Hi_Shop.Application.Visitors.SaveVisitorInfo;
 using Hi_Shop.Application.Visitors.VisitorOnline;
 using Hi_Shop.EndPoint.Hubs;
@@ -22,8 +23,8 @@ builder.Services.AddControllersWithViews();
 
 
 #region Connection String
-var provider =builder.Services.BuildServiceProvider();
-var configuration=provider.GetRequiredService<IConfiguration>();
+var provider = builder.Services.BuildServiceProvider();
+var configuration = provider.GetRequiredService<IConfiguration>();
 string connection = configuration.GetConnectionString("SqlServer");
 builder.Services.AddDbContext<DataBaseContext>(option => option.UseSqlServer(connection));
 builder.Services.AddIdentityService(configuration);
@@ -46,11 +47,13 @@ builder.Services.AddTransient<IGetCatalogItemPLPService, GetCatalogItemPLPServic
 builder.Services.AddTransient<IGetCatalogItemPDPService, GetCatalogItemPDPService>();
 builder.Services.AddTransient<IUriComposerService, UriComposerService>();
 builder.Services.AddTransient<IBasketService, BasketService>();
+builder.Services.AddTransient<IUserAddressService, UserAddressService>();
 builder.Services.AddScoped<SaveVisitorFilter>();
 builder.Services.AddSignalR();
 
 //mapper
 builder.Services.AddAutoMapper(typeof(CatalogMappingProfile));
+builder.Services.AddAutoMapper(typeof(UserMappingProfile));
 
 var app = builder.Build();
 
@@ -68,7 +71,9 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

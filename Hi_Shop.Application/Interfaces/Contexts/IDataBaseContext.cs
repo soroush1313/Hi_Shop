@@ -1,5 +1,6 @@
 ﻿using Hi_Shop.Domain.Baskets;
 using Hi_Shop.Domain.Catalogs;
+using Hi_Shop.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hi_Shop.Application.Interfaces.Contexts
@@ -11,6 +12,7 @@ namespace Hi_Shop.Application.Interfaces.Contexts
         DbSet<CatalogItem> CatalogItems { get; set; }
         DbSet<Basket> Baskets { get; set; }
         DbSet<BasketItem> BasketItems { get; set; }
+        DbSet<UserAddress> UserAddresses { get; set; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);

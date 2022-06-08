@@ -38,5 +38,9 @@
   <None Remove="appsettings.Development.json" />
   <None Remove="appsettings.Production.json" />
 </ItemGroup>
+<ItemGroup>
+  <Folder Include="Areas\Customers\Data\" />
+  <Folder Include="Areas\Customers\Models\" />
+</ItemGroup>
 
 </Project>
