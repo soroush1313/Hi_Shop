@@ -2,6 +2,7 @@
 using Hi_Shop.Domain.Attributes;
 using Hi_Shop.Domain.Baskets;
 using Hi_Shop.Domain.Catalogs;
+using Hi_Shop.Domain.Order;
 using Hi_Shop.Domain.Users;
 using Hi_Shop.Persistence.EntityConfigurations;
 using Hi_Shop.Persistence.Seeds;
@@ -22,6 +23,8 @@ namespace Hi_Shop.Persistence.Contexts
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<UserAddress> UserAddresses { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -45,6 +48,8 @@ namespace Hi_Shop.Persistence.Contexts
             builder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
 
             DataBaseContextSeed.CatalogSeed(builder);
+
+            builder.Entity<Order>().OwnsOne(p => p.Address);
 
             base.OnModelCreating(builder);
         }

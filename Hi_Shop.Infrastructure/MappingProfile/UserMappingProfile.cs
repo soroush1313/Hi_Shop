@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hi_Shop.Application.Users;
+using Hi_Shop.Domain.Order;
 using Hi_Shop.Domain.Users;
 
 namespace Hi_Shop.Infrastructure.MappingProfile
@@ -15,6 +16,7 @@ namespace Hi_Shop.Infrastructure.MappingProfile
         {
             CreateMap<UserAddress, UserAddressDto>();
             CreateMap<AddUserAddressDto, UserAddress>();
+            CreateMap<UserAddress, Address>();
         }
     }
 }

@@ -4,6 +4,7 @@ using Hi_Shop.Application.Catalogs.CatalogItems.GetCatalogItemPLP;
 using Hi_Shop.Application.Catalogs.CatalogItems.UriComposer;
 using Hi_Shop.Application.Catalogs.CatalogTypes.GetMenuItem;
 using Hi_Shop.Application.Interfaces.Contexts;
+using Hi_Shop.Application.Orders;
 using Hi_Shop.Application.Users;
 using Hi_Shop.Application.Visitors.SaveVisitorInfo;
 using Hi_Shop.Application.Visitors.VisitorOnline;
@@ -48,6 +49,7 @@ builder.Services.AddTransient<IGetCatalogItemPDPService, GetCatalogItemPDPServic
 builder.Services.AddTransient<IUriComposerService, UriComposerService>();
 builder.Services.AddTransient<IBasketService, BasketService>();
 builder.Services.AddTransient<IUserAddressService, UserAddressService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddScoped<SaveVisitorFilter>();
 builder.Services.AddSignalR();
 

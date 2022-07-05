@@ -4,6 +4,7 @@ using Hi_Shop.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hi_Shop.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220613055741_Order")]
+    partial class Order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 934, DateTimeKind.Local).AddTicks(9502));
+                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 514, DateTimeKind.Local).AddTicks(4479));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -72,7 +74,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 935, DateTimeKind.Local).AddTicks(2023));
+                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 514, DateTimeKind.Local).AddTicks(6566));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -116,7 +118,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 935, DateTimeKind.Local).AddTicks(4769));
+                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 514, DateTimeKind.Local).AddTicks(8624));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -190,7 +192,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 935, DateTimeKind.Local).AddTicks(7583));
+                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 515, DateTimeKind.Local).AddTicks(776));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -243,7 +245,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 936, DateTimeKind.Local).AddTicks(1279));
+                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 515, DateTimeKind.Local).AddTicks(3892));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -288,7 +290,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 936, DateTimeKind.Local).AddTicks(3852));
+                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 515, DateTimeKind.Local).AddTicks(6178));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -323,7 +325,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 936, DateTimeKind.Local).AddTicks(6521));
+                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 515, DateTimeKind.Local).AddTicks(8228));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -390,16 +392,6 @@ namespace Hi_Shop.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("InsertTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 936, DateTimeKind.Local).AddTicks(9676));
-
-                    b.Property<bool>("IsRemoved")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -411,12 +403,6 @@ namespace Hi_Shop.Persistence.Migrations
 
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("RemoveTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -438,16 +424,6 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<int>("CatalogItemId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("InsertTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 937, DateTimeKind.Local).AddTicks(2621));
-
-                    b.Property<bool>("IsRemoved")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
@@ -459,17 +435,11 @@ namespace Hi_Shop.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("RemoveTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("UnitPrice")
                         .HasColumnType("int");
 
                     b.Property<int>("Units")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -493,7 +463,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 7, 5, 10, 12, 27, 937, DateTimeKind.Local).AddTicks(4925));
+                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 516, DateTimeKind.Local).AddTicks(452));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
