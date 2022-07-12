@@ -1,5 +1,6 @@
 ﻿using Hi_Shop.Application.BasketsService;
 using Hi_Shop.Application.Orders;
+using Hi_Shop.Application.Payments;
 using Hi_Shop.Application.Users;
 using Hi_Shop.Domain.Order;
 using Hi_Shop.Domain.Users;
@@ -18,14 +19,20 @@ namespace Hi_Shop.EndPoint.Controllers
         private readonly SignInManager<User> signInManager;
         private readonly IUserAddressService userAddressService;
         private readonly IOrderService orderService;
+        private readonly IPaymentService paymentService;
         private string userId = null;
 
-        public BasketController(IBasketService basketService, SignInManager<User> signInManager,IUserAddressService userAddressService,IOrderService orderService)
+        public BasketController(IBasketService basketService,
+            SignInManager<User> signInManager,
+            IUserAddressService userAddressService,
+            IOrderService orderService,
+            IPaymentService paymentService)
         {
             this.basketService = basketService;
             this.signInManager = signInManager;
             this.userAddressService = userAddressService;
             this.orderService = orderService;
+            this.paymentService = paymentService;
         }
 
         [AllowAnonymous]
@@ -77,8 +84,10 @@ namespace Hi_Shop.EndPoint.Controllers
             if (PaymentMethod == PaymentMethod.OnlinePayment)
             {
                 //sabte pardakht
+                var payment = paymentService.PayForOrder(orderId);
+
                 //ersal be dargahe pardakht
-                return View();
+                return RedirectToAction("Index","Pay",new {PaymentId = payment.PaymentId});
             }
             else
             {

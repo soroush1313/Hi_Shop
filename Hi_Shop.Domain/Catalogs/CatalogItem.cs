@@ -1,4 +1,5 @@
 ﻿using Hi_Shop.Domain.Attributes;
+using Hi_Shop.Domain.Discounts;
 
 namespace Hi_Shop.Domain.Catalogs
 {
@@ -22,5 +23,6 @@ namespace Hi_Shop.Domain.Catalogs
 
         public ICollection<CatalogItemFeature> CatalogItemFeatures { get; set; }
         public ICollection<CatalogItemImage> CatalogItemImages { get; set; }
+        public ICollection<Discount> Discounts { get; set; }
     }
 }

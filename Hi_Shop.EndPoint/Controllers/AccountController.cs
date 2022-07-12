@@ -86,7 +86,7 @@ namespace Hi_Shop.EndPoint.Controllers
             if (result.Succeeded)
             {
                 TransferBasketForUser(user.Id);
-                return Redirect(model.ReturnUrl);
+                return Redirect(model?.ReturnUrl?? "/");
             }
             if (result.RequiresTwoFactor)
             {

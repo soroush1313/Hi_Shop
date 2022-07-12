@@ -1,11 +1,12 @@
-﻿using Hi_Shop.Domain.Users;
+﻿using Hi_Shop.Application.Interfaces.Contexts;
+using Hi_Shop.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hi_Shop.Persistence.Contexts
 {
-    public class IdentityDataBaseContext : IdentityDbContext<User>
+    public class IdentityDataBaseContext : IdentityDbContext<User> , IIdentityDataBaseContext
     {
         public IdentityDataBaseContext(DbContextOptions<IdentityDataBaseContext> options) : base(options)
         {

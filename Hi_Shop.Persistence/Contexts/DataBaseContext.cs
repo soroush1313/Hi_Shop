@@ -2,7 +2,9 @@
 using Hi_Shop.Domain.Attributes;
 using Hi_Shop.Domain.Baskets;
 using Hi_Shop.Domain.Catalogs;
+using Hi_Shop.Domain.Discounts;
 using Hi_Shop.Domain.Order;
+using Hi_Shop.Domain.Payments;
 using Hi_Shop.Domain.Users;
 using Hi_Shop.Persistence.EntityConfigurations;
 using Hi_Shop.Persistence.Seeds;
@@ -25,6 +27,8 @@ namespace Hi_Shop.Persistence.Contexts
         public DbSet<UserAddress> UserAddresses { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

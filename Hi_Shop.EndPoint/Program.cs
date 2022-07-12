@@ -5,6 +5,7 @@ using Hi_Shop.Application.Catalogs.CatalogItems.UriComposer;
 using Hi_Shop.Application.Catalogs.CatalogTypes.GetMenuItem;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Orders;
+using Hi_Shop.Application.Payments;
 using Hi_Shop.Application.Users;
 using Hi_Shop.Application.Visitors.SaveVisitorInfo;
 using Hi_Shop.Application.Visitors.VisitorOnline;
@@ -44,12 +45,14 @@ builder.Services.AddTransient<ISaveVisitorInfoService, SaveVisitorInfoService>()
 builder.Services.AddTransient<IVisitorOnlineService, VisitorOnlineService>();
 builder.Services.AddTransient<IGetMenuItemService, GetMenuItemService>();
 builder.Services.AddTransient<IDataBaseContext, DataBaseContext>();
+builder.Services.AddTransient<IIdentityDataBaseContext, IdentityDataBaseContext>();
 builder.Services.AddTransient<IGetCatalogItemPLPService, GetCatalogItemPLPService>();
 builder.Services.AddTransient<IGetCatalogItemPDPService, GetCatalogItemPDPService>();
 builder.Services.AddTransient<IUriComposerService, UriComposerService>();
 builder.Services.AddTransient<IBasketService, BasketService>();
 builder.Services.AddTransient<IUserAddressService, UserAddressService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IPaymentService, PaymentService>();
 builder.Services.AddScoped<SaveVisitorFilter>();
 builder.Services.AddSignalR();
 
