@@ -3,6 +3,7 @@ using Application.Catalogs.CatalogTypes;
 using FluentValidation;
 using Hi_Shop.Application.Catalogs.CatalogItems.AddNewCatalogItem;
 using Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices;
+using Hi_Shop.Application.Discounts.AddNewDiscountService;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.GetTodayReport;
 using Hi_Shop.Infrastructure.ExternalApi.ImageServer;
@@ -22,6 +23,7 @@ builder.Services.AddTransient<ICatalogTypeService, CatalogTypeService>();
 builder.Services.AddTransient<IAddNewCatalogItemService, AddNewCatalogItemService>();
 builder.Services.AddTransient<ICatalogItemService, CatalogItemService>();
 builder.Services.AddTransient<IImageUploadService, ImageUploadService>();
+builder.Services.AddTransient<IAddNewDiscountService, AddNewDiscountService>();
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 builder.Services.AddScoped<DataBaseContextSeed>();
 

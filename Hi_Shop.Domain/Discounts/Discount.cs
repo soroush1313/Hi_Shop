@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Hi_Shop.Domain.Discounts
         public int DiscountPercentage { get; set; }
         public int DiscountAmount { get; set; }
         public DateTime? StartDate { get; set; }
-        public DateTime? EnDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public bool ReqiresCouponCode { get; set; }
         public string CouponCode { get; set; }
 
@@ -48,16 +49,23 @@ namespace Hi_Shop.Domain.Discounts
 
     public enum DiscountType
     {
+        [Display(Name = "تخفیف برای محصولات")]
         AssignedProduct = 1,
+        [Display(Name = "تخفیف برای دسته بندی")]
         AssignedToCategories = 2,
+        [Display(Name = "تخفیف برای مشتری")]
         AssignedToUser = 3,
+        [Display(Name = "تخفیف برای برند")]
         AssignedToBrand = 4,
     }
 
     public enum DiscountLimitationType
     {
+        [Display(Name = "بدون محدودیت تعداد")]
         Unlimited = 0,
+        [Display(Name = "فقط N بار")]
         NTimesOnly = 1,
+        [Display(Name = "N بار به ازای هر مشتری")]
         NTimesPerCustomer = 2
     }
 }
