@@ -3,6 +3,7 @@ using Application.Catalogs.CatalogTypes;
 using FluentValidation;
 using Hi_Shop.Application.Catalogs.CatalogItems.AddNewCatalogItem;
 using Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices;
+using Hi_Shop.Application.Discounts;
 using Hi_Shop.Application.Discounts.AddNewDiscountService;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Visitors.GetTodayReport;
@@ -17,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 builder.Services.AddScoped<IGetTodayReportService, GetTodayReportService>();
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 builder.Services.AddTransient<ICatalogTypeService, CatalogTypeService>();
@@ -24,6 +26,7 @@ builder.Services.AddTransient<IAddNewCatalogItemService, AddNewCatalogItemServic
 builder.Services.AddTransient<ICatalogItemService, CatalogItemService>();
 builder.Services.AddTransient<IImageUploadService, ImageUploadService>();
 builder.Services.AddTransient<IAddNewDiscountService, AddNewDiscountService>();
+builder.Services.AddTransient<IDiscountService, DiscountService>();
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 builder.Services.AddScoped<DataBaseContextSeed>();
 
@@ -68,5 +71,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.MapControllers();
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "/api/controller=DiscountApi/{action=SearchCatalogItem}/{id?}");
 app.Run();

@@ -135,11 +135,12 @@
 
     <script src="~/lib/select2/js/select2.js"></script>
 <script>
-    $("#model_appliedToCatalogItem").select2({
+    $("#model_AppliedToCatalogItem").select2({
         placeholder: "محصول را جستجو وانتخاب کنید",
         allowClear: true,
         multiple: true,
         tags: true,
+        //targetTextSelector: '#model_AppliedToCatalogItem',
         tokenSeparators: [',', ' '],
         theme: "bootstrap4",
         ajax: {
@@ -148,7 +149,7 @@
             data: function (params) {
                 var query =
                 {
-                    term: params.term,
+                    term: params.term
                 };
                 return query;
             },

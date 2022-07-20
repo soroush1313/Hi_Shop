@@ -12,6 +12,9 @@ namespace Admin.EndPoint.Pages.Discounts
         {
             this.addNewDiscountService = addNewDiscountService;
         }
+
+        //[ModelBinder(BinderType = typeof(DiscountEntityBinder))]
+        [BindProperty]
         public AddNewDiscountDto model { get; set; }
 
 
