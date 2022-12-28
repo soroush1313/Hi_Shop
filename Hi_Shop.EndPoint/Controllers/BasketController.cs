@@ -1,4 +1,5 @@
 ﻿using Hi_Shop.Application.BasketsService;
+using Hi_Shop.Application.Discounts;
 using Hi_Shop.Application.Orders;
 using Hi_Shop.Application.Payments;
 using Hi_Shop.Application.Users;
@@ -20,19 +21,25 @@ namespace Hi_Shop.EndPoint.Controllers
         private readonly IUserAddressService userAddressService;
         private readonly IOrderService orderService;
         private readonly IPaymentService paymentService;
+        private readonly IDiscountService discountService;
+        private readonly UserManager<User> userManager;
         private string userId = null;
 
         public BasketController(IBasketService basketService,
             SignInManager<User> signInManager,
             IUserAddressService userAddressService,
             IOrderService orderService,
-            IPaymentService paymentService)
+            IPaymentService paymentService,
+            IDiscountService discountService,
+            UserManager<User> userManager)
         {
             this.basketService = basketService;
             this.signInManager = signInManager;
             this.userAddressService = userAddressService;
             this.orderService = orderService;
             this.paymentService = paymentService;
+            this.discountService = discountService;
+            this.userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -95,6 +102,35 @@ namespace Hi_Shop.EndPoint.Controllers
                 return RedirectToAction("Index", "Orders", new { area = "customers" });
             }
         }
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ApplyDiscount(string couponCode, int basketId)
+        {
+            var user = userManager.GetUserAsync(User).Result;
+            var validDiscount = discountService.IsDiscountValid(couponCode, user);
+            if (validDiscount.IsSuccess)
+            {
+                discountService.ApplyDiscountInBasket(couponCode, basketId);
+            }
+            else
+            {
+                TempData["InvalidMessage"] = String.Join(Environment.NewLine,
+                    validDiscount.Message.Select(a => String.Join(",", a)));
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [AllowAnonymous]
+        public IActionResult RemoveDiscount(int id)
+        {
+            discountService.RemoveDiscountFromBasket(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
 
         private BasketDto GetOrSetBasket()
         {

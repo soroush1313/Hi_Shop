@@ -14,9 +14,9 @@ namespace Hi_Shop.EndPoint.Controllers
             this.getCatalogItemPLPService = getcatalogItemPlpService;
             this.getCatalogItemPdpService = getCatalogItemPdpService;
         }
-        public IActionResult Index(int page = 1 , int pageSize = 20)
+        public IActionResult Index(CatalogPLPRequestDto catalogPlpRequestDto)
         {
-            var data = getCatalogItemPLPService.Execute(page, pageSize);
+            var data = getCatalogItemPLPService.Execute(catalogPlpRequestDto);
             return View(data);
         }
 

@@ -32,6 +32,8 @@ namespace Hi_Shop.Application.Payments
             var payment = context.Payments
                 .Include(p => p.Order)
                 .ThenInclude(p => p.OrderItems)
+                .Include(p => p.Order)
+                .ThenInclude(p => p.AppliedDiscount)
                 .SingleOrDefault(p => p.Id == Id);
 
             var user = identityContext.Users.SingleOrDefault(p => p.Id == payment.Order.UserId);
@@ -58,6 +60,7 @@ namespace Hi_Shop.Application.Payments
         {
             var order = context.Orders
                 .Include(p => p.OrderItems)
+                .Include(p=>p.AppliedDiscount)
                 .SingleOrDefault(p => p.Id == orderId);
             if (order == null)
                 throw new Exception("");

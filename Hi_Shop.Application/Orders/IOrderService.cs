@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hi_Shop.Application.Catalogs.CatalogItems.UriComposer;
+using Hi_Shop.Application.Discounts;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Domain.Order;
 using Microsoft.EntityFrameworkCore;
@@ -21,16 +22,19 @@ namespace Hi_Shop.Application.Orders
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
         private readonly IUriComposerService composerService;
+        private readonly IDiscountHistoryService discountHistoryService;
 
-        public OrderService(IDataBaseContext context, IMapper mapper, IUriComposerService composerService)
+        public OrderService(IDataBaseContext context, IMapper mapper, IUriComposerService composerService, IDiscountHistoryService discountHistoryService)
         {
             this.context = context;
             this.mapper = mapper;
             this.composerService = composerService;
+            this.discountHistoryService = discountHistoryService;
         }
         public int CreateOrder(int BasketId, int UserAddressId, PaymentMethod paymentMethod)
         {
             var basket = context.Baskets.Include(p => p.Items)
+                .Include(p=>p.AppliedDiscount)
                 .SingleOrDefault(p => p.Id == BasketId);
             int[] Ids = basket.Items.Select(p => p.CatalogItemId).ToArray();
             var catalogItems = context.CatalogItems.Include(p => p.CatalogItemImages).Where(p => Ids.Contains(p.Id));
@@ -46,10 +50,14 @@ namespace Hi_Shop.Application.Orders
 
             var userAddress = context.UserAddresses.SingleOrDefault(p => p.Id == UserAddressId);
             var address = mapper.Map<Address>(userAddress);
-            var order = new Order(basket.BuyerId, address, orderItems, paymentMethod);
+            var order = new Order(basket.BuyerId, address, orderItems, paymentMethod, basket.AppliedDiscount);
             context.Orders.Add(order);
             context.Baskets.Remove(basket);
             context.SaveChanges();
+            if (basket.AppliedDiscount != null)
+            {
+                discountHistoryService.InsertDiscountUsageHistory(basket.Id , order.Id);
+            }
             return order.Id;
         }
     }

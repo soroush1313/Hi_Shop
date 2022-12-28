@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hi_Shop.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20220613055741_Order")]
-    partial class Order
+    [Migration("20221225164130_addOldPrice")]
+    partial class addOldPrice
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,21 @@ namespace Hi_Shop.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("CatalogItemDiscount", b =>
+                {
+                    b.Property<int>("CatalogItemsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiscountsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CatalogItemsId", "DiscountsId");
+
+                    b.HasIndex("DiscountsId");
+
+                    b.ToTable("CatalogItemDiscount");
+                });
+
             modelBuilder.Entity("Hi_Shop.Domain.Baskets.Basket", b =>
                 {
                     b.Property<int>("Id")
@@ -32,14 +47,20 @@ namespace Hi_Shop.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("AppliedDiscountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("BuyerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DiscountAmount")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 514, DateTimeKind.Local).AddTicks(4479));
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 39, DateTimeKind.Local).AddTicks(318));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -53,6 +74,8 @@ namespace Hi_Shop.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppliedDiscountId");
 
                     b.ToTable("Baskets");
                 });
@@ -74,7 +97,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 514, DateTimeKind.Local).AddTicks(6566));
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 39, DateTimeKind.Local).AddTicks(3165));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -118,7 +141,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 514, DateTimeKind.Local).AddTicks(8624));
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 39, DateTimeKind.Local).AddTicks(5604));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -192,7 +215,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 515, DateTimeKind.Local).AddTicks(776));
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 39, DateTimeKind.Local).AddTicks(8527));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -205,6 +228,12 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OldPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PercentDiscount")
+                        .HasColumnType("int");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -245,7 +274,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 515, DateTimeKind.Local).AddTicks(3892));
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 40, DateTimeKind.Local).AddTicks(2339));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -290,7 +319,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 515, DateTimeKind.Local).AddTicks(6178));
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 40, DateTimeKind.Local).AddTicks(4436));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -325,7 +354,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 515, DateTimeKind.Local).AddTicks(8228));
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 40, DateTimeKind.Local).AddTicks(6741));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -384,6 +413,96 @@ namespace Hi_Shop.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Hi_Shop.Domain.Discounts.Discount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CouponCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DiscountAmount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiscountLimitationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiscountPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiscountTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 40, DateTimeKind.Local).AddTicks(9853));
+
+                    b.Property<bool>("IsRemoved")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("LimitationTimes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("ReqiresCouponCode")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("UsePercentage")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Discounts");
+                });
+
+            modelBuilder.Entity("Hi_Shop.Domain.Discounts.DiscountUsageHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreateOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DiscountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiscountId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("DiscountUsageHistories");
+                });
+
             modelBuilder.Entity("Hi_Shop.Domain.Order.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -391,6 +510,22 @@ namespace Hi_Shop.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("AppliedDiscountId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("InsertTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 41, DateTimeKind.Local).AddTicks(4178));
+
+                    b.Property<bool>("IsRemoved")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -404,48 +539,69 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppliedDiscountId");
+
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Hi_Shop.Domain.Order.OrderItem", b =>
+            modelBuilder.Entity("Hi_Shop.Domain.Payments.Payment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CatalogItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PictureUri")
+                    b.Property<string>("Authority")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("DatePay")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("UnitPrice")
+                    b.Property<DateTime>("InsertTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 41, DateTimeKind.Local).AddTicks(8685));
+
+                    b.Property<bool>("IsPay")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRemoved")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Units")
-                        .HasColumnType("int");
+                    b.Property<long>("RefId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("Hi_Shop.Domain.Users.UserAddress", b =>
@@ -463,7 +619,7 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Property<DateTime>("InsertTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 6, 13, 10, 27, 41, 516, DateTimeKind.Local).AddTicks(452));
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 42, DateTimeKind.Local).AddTicks(735));
 
                     b.Property<bool>("IsRemoved")
                         .ValueGeneratedOnAdd()
@@ -499,6 +655,81 @@ namespace Hi_Shop.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserAddresses");
+                });
+
+            modelBuilder.Entity("OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CatalogItemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("InsertTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 12, 25, 20, 11, 30, 42, DateTimeKind.Local).AddTicks(2362));
+
+                    b.Property<bool>("IsRemoved")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PictureUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UnitPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Units")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("CatalogItemDiscount", b =>
+                {
+                    b.HasOne("Hi_Shop.Domain.Catalogs.CatalogItem", null)
+                        .WithMany()
+                        .HasForeignKey("CatalogItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hi_Shop.Domain.Discounts.Discount", null)
+                        .WithMany()
+                        .HasForeignKey("DiscountsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Hi_Shop.Domain.Baskets.Basket", b =>
+                {
+                    b.HasOne("Hi_Shop.Domain.Discounts.Discount", "AppliedDiscount")
+                        .WithMany()
+                        .HasForeignKey("AppliedDiscountId");
+
+                    b.Navigation("AppliedDiscount");
                 });
 
             modelBuilder.Entity("Hi_Shop.Domain.Baskets.BasketItem", b =>
@@ -568,9 +799,32 @@ namespace Hi_Shop.Persistence.Migrations
                     b.Navigation("ParentCatalogType");
                 });
 
+            modelBuilder.Entity("Hi_Shop.Domain.Discounts.DiscountUsageHistory", b =>
+                {
+                    b.HasOne("Hi_Shop.Domain.Discounts.Discount", "Discount")
+                        .WithMany()
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hi_Shop.Domain.Order.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Discount");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Hi_Shop.Domain.Order.Order", b =>
                 {
-                    b.OwnsOne("Hi_Shop.Domain.Order.Address", "Address", b1 =>
+                    b.HasOne("Hi_Shop.Domain.Discounts.Discount", "AppliedDiscount")
+                        .WithMany()
+                        .HasForeignKey("AppliedDiscountId");
+
+                    b.OwnsOne("Address", "Address", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
@@ -605,9 +859,22 @@ namespace Hi_Shop.Persistence.Migrations
 
                     b.Navigation("Address")
                         .IsRequired();
+
+                    b.Navigation("AppliedDiscount");
                 });
 
-            modelBuilder.Entity("Hi_Shop.Domain.Order.OrderItem", b =>
+            modelBuilder.Entity("Hi_Shop.Domain.Payments.Payment", b =>
+                {
+                    b.HasOne("Hi_Shop.Domain.Order.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("OrderItem", b =>
                 {
                     b.HasOne("Hi_Shop.Domain.Order.Order", null)
                         .WithMany("OrderItems")

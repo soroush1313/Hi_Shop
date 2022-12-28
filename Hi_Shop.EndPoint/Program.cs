@@ -1,8 +1,10 @@
 using Hi_Shop.Application.BasketsService;
+using Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices;
 using Hi_Shop.Application.Catalogs.CatalogItems.GetCatalogItemPDP;
 using Hi_Shop.Application.Catalogs.CatalogItems.GetCatalogItemPLP;
 using Hi_Shop.Application.Catalogs.CatalogItems.UriComposer;
 using Hi_Shop.Application.Catalogs.CatalogTypes.GetMenuItem;
+using Hi_Shop.Application.Discounts;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Application.Orders;
 using Hi_Shop.Application.Payments;
@@ -53,6 +55,9 @@ builder.Services.AddTransient<IBasketService, BasketService>();
 builder.Services.AddTransient<IUserAddressService, UserAddressService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IPaymentService, PaymentService>();
+builder.Services.AddTransient<IDiscountService, DiscountService>();
+builder.Services.AddTransient<IDiscountHistoryService, DiscountHistoryService>();
+builder.Services.AddTransient<ICatalogItemService, CatalogItemService>();
 builder.Services.AddScoped<SaveVisitorFilter>();
 builder.Services.AddSignalR();
 

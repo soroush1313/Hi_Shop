@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hi_Shop.Application.Catalogs.CatalogItems.UriComposer;
 using Hi_Shop.Application.Dtos;
 using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Common;
@@ -13,6 +14,10 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
         List<ListCatalogTypeDto> GetCatalogType();
         PaginatedItemsDto<CatalogItemListItemDto> GetCatalogList(int page, int pageSize);
 
+        void AddToMyFavourite(string userId, int catalogItemId);
+        PaginatedItemsDto<FavouriteCatalogItemDto> GetMyFavourite(string userId, int page = 1, int pageSize = 20);
+
+
         BaseDto<CatalogItemDto> Add(CatalogItemDto catalogItem);
         BaseDto Remove(int Id);
         BaseDto<CatalogItemDto> Edit(CatalogItemDto catalogItem);
@@ -24,11 +29,13 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
     {
         private readonly IDataBaseContext context;
         private readonly IMapper mapper;
+        private readonly IUriComposerService uriComposerService;
 
-        public CatalogItemService(IDataBaseContext context, IMapper mapper)
+        public CatalogItemService(IDataBaseContext context, IMapper mapper,IUriComposerService uriComposerService)
         {
             this.context = context;
             this.mapper = mapper;
+            this.uriComposerService = uriComposerService;
         }
 
         public BaseDto<CatalogItemDto> Add(CatalogItemDto catalogItem)
@@ -42,6 +49,18 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
                 new List<string> { $" با موفقیت در سیستم ثبت شد" },
                 mapper.Map<CatalogItemDto>(model)
             );
+        }
+
+        public void AddToMyFavourite(string userId, int catalogItemId)
+        {
+            var catalogItem = context.CatalogItems.Find(catalogItemId);
+            CatalogItemFavourite catalogItemFavourite = new CatalogItemFavourite
+            {
+                CatalogItem = catalogItem,
+                UserId = userId
+            };
+            context.CatalogItemFavourites.Add(catalogItemFavourite);
+            context.SaveChanges();
         }
 
         public BaseDto<CatalogItemDto> Edit(CatalogItemDto catalogItem)
@@ -119,6 +138,31 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
             return types;
         }
 
+        public PaginatedItemsDto<FavouriteCatalogItemDto> GetMyFavourite(string userId, int page = 1, int pageSize = 20)
+        {
+            var model = context.CatalogItems
+                .Include(p => p.CatalogItemImages)
+                .Include(p => p.Discounts)
+                .Include(p => p.CatalogItemFavourites)
+                .Where(p => p.CatalogItemFavourites.Any(f => f.UserId == userId))
+                .OrderByDescending(p => p.Id)
+                .AsQueryable();
+            int rowCount = 0;
+            var data = model.PagedResult(page, pageSize, out rowCount)
+                .ToList()
+                .Select(p => new FavouriteCatalogItemDto()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Rate = 4,
+                    AvailableStock = p.AvailableStock,
+                    Image = uriComposerService
+                        .ComposeImageUri(p.CatalogItemImages.FirstOrDefault().Src)
+                }).ToList();
+            return new PaginatedItemsDto<FavouriteCatalogItemDto>(page, pageSize, rowCount, data);
+        }
+
         public BaseDto Remove(int Id)
         {
             var catalogItem = context.CatalogItems.Find(Id);
@@ -131,6 +175,16 @@ namespace Hi_Shop.Application.Catalogs.CatalogItems.CatalogItemServices
             );
 
         }
+    }
+
+    public class FavouriteCatalogItemDto
+    {
+        public int Id { get; set; }
+        public int Price { get; set; }
+        public int Rate { get; set; }
+        public int AvailableStock { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
     }
 
     public class CatalogBrandDto

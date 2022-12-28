@@ -56,13 +56,14 @@ namespace Hi_Shop.Application.BasketsService
             {
                 Id = basket.Id,
                 BuyerId = basket.BuyerId,
+                DiscountAmount = basket.DiscountAmount,
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
                     CatalogItemId = item.CatalogItemId,
                     Id = item.Id,
                     CatalogName = item.CatalogItem.Name,
                     Quantity = item.Quantity,
-                    UnitPrice = item.UnitPrice,
+                    UnitPrice = item.CatalogItem.Price,
                     ImageUrl = uriComposerService.ComposeImageUri(item?.CatalogItem?.CatalogItemImages?.FirstOrDefault()
                         ?.Src ?? ""),
 
@@ -72,9 +73,15 @@ namespace Hi_Shop.Application.BasketsService
 
         public BasketDto GetOrCreateBasketForUser(string buyerId)
         {
-            var basket = context.Baskets.Include(p=>p.Items)
+            var basket = context.Baskets
+                .Include(p=>p.Items)
                 .ThenInclude(p=>p.CatalogItem)
                 .ThenInclude(p=>p.CatalogItemImages)
+
+                .Include(p => p.Items)
+                .ThenInclude(p => p.CatalogItem)
+                .ThenInclude(p => p.Discounts)
+                
                 .SingleOrDefault(p => p.BuyerId == buyerId);
             if (basket == null)
             {
@@ -86,6 +93,7 @@ namespace Hi_Shop.Application.BasketsService
             {
                 Id = basket.Id,
                 BuyerId = basket.BuyerId,
+                DiscountAmount = basket.DiscountAmount,
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
                     CatalogItemId = item.CatalogItemId,
@@ -118,7 +126,10 @@ namespace Hi_Shop.Application.BasketsService
 
         public void TransferBasket(string anonymousId, string UserId)
         {
-            var anonymousBasket = context.Baskets.SingleOrDefault(p => p.BuyerId == anonymousId);
+            var anonymousBasket = context.Baskets
+                .Include(p=>p.Items)
+                .Include(p=>p.AppliedDiscount)
+                .SingleOrDefault(p => p.BuyerId == anonymousId);
             if(anonymousBasket == null) return;
             var userBasket = context.Baskets.SingleOrDefault(p => p.BuyerId == UserId);
             if (userBasket == null)
@@ -131,7 +142,10 @@ namespace Hi_Shop.Application.BasketsService
             {
                 userBasket.AddItem(item.CatalogItemId,item.Quantity,item.UnitPrice);
             }
-
+            if (anonymousBasket.AppliedDiscount != null)
+            {
+                userBasket.ApplyDiscountCode(anonymousBasket.AppliedDiscount);
+            }
             context.Baskets.Remove(anonymousBasket);
             context.SaveChanges();
         }
@@ -154,12 +168,26 @@ namespace Hi_Shop.Application.BasketsService
         public int Id { get; set; }
         public string BuyerId { get; set; }
         public List<BasketItemDto> Items { get; set; } = new List<BasketItemDto>();
+        public int DiscountAmount { get; set; }
 
         public int Total()
         {
             if (Items.Count > 0)
             {
-                return Items.Sum(p => p.UnitPrice * p.Quantity);
+                int total = Items.Sum(p => p.UnitPrice * p.Quantity);
+                total -= DiscountAmount;
+                return total;
+            }
+
+            return 0;
+        }
+
+        public int TotalWithOutDiscount()
+        {
+            if (Items.Count > 0)
+            {
+                int total = Items.Sum(p => p.UnitPrice * p.Quantity);
+                return total;
             }
 
             return 0;

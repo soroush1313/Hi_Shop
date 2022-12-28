@@ -27,6 +27,7 @@ builder.Services.AddTransient<ICatalogItemService, CatalogItemService>();
 builder.Services.AddTransient<IImageUploadService, ImageUploadService>();
 builder.Services.AddTransient<IAddNewDiscountService, AddNewDiscountService>();
 builder.Services.AddTransient<IDiscountService, DiscountService>();
+builder.Services.AddTransient<IDiscountHistoryService, DiscountHistoryService>();
 builder.Services.AddTransient(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 builder.Services.AddScoped<DataBaseContextSeed>();
 
