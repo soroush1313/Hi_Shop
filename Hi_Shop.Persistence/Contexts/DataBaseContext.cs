@@ -1,5 +1,6 @@
 ﻿using Hi_Shop.Application.Interfaces.Contexts;
 using Hi_Shop.Domain.Attributes;
+using Hi_Shop.Domain.Banners;
 using Hi_Shop.Domain.Baskets;
 using Hi_Shop.Domain.Catalogs;
 using Hi_Shop.Domain.Discounts;
@@ -31,6 +32,7 @@ namespace Hi_Shop.Persistence.Contexts
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<DiscountUsageHistory> DiscountUsageHistories { get; set; }
         public DbSet<CatalogItemFavourite> CatalogItemFavourites { get; set; }
+        public DbSet<Banner> Banners { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
